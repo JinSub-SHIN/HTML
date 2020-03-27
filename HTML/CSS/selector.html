@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/css/selector.html</title>
+<style>
+*{font-size: 20px;
+}
+div{
+	background-color: green;
+	border:1px solid;
+}
+
+#id1{
+	color: red;
+	font-weight: bold;
+}
+.c1{
+	font-style: italic;
+	font-size: 50px;
+}
+table>tbody>tr{
+	background: lightblue;
+}
+
+table tr:nth-child(2n+1) {
+	color: red;	
+}
+
+form>input[type=text]{
+	background-color: yellow;
+}
+
+form>input[type=checkbox]~span{
+	background: red;
+	color : blue;
+}
+
+
+</style>
+</head>
+<body>
+
+<p id="id1">P1</p>
+<div class="c1">
+	<p>div-P2</p>
+</div>
+
+<p>P3</p>
+<p class="c1">P4</p>
+
+<div>
+	<p>div-P5</p>
+</div>
+
+<p>P6</p>
+
+
+<table>
+<tr><td>1</td><td>2</td></tr>
+<tr><td>3</td><td>4</td></tr>
+<tr><td>5</td><td>5</td></tr>
+</table>
+
+<form> 
+	<input type="text" value="텍스트">
+	<input type="number" value="5">
+	<input type="checkbox"><span>A</span>
+	<input type="checkbox"><span>B</span>
+	<input type="checkbox"><span>C</span>
+		
+</form>
+
+
+</body>
+</html>

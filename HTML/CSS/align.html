@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+*{ box-sizing: border-box;}
+/*인라인요소는 자신이 크기,위치를 지정할 수 없다. 부모의 설정 또는 content에 따라 달라진다. */
+.parent{ /*부모*/
+  width: 300px;
+  height:300px;
+  word-wrap:break-word; /*택스트가 길어지면 자동 줄바꿈해준다*/
+  font-size:30px;
+  border: 3px solid #73AD21;
+  text-align:center; /*하위요소를 가로중앙정렬할때 사용*/
+  line-height:300px; /*줄간격*/
+  /*line-height:300px;*/  /*줄간격. 하위요소를 세로중앙정렬할때 사용 */
+}
+.red{
+  border: 3px solid red;
+  background:pink;
+}
+.blue{
+  border: 3px solid blue;
+  background:lightblue;
+}
+.inline1 {  
+  width: 50px;
+  height:50px;
+  display:inline-block; 
+  vertical-align:baseline;/*줄간격 내부에서의 수직위치: baseline*/
+}
+.inline2 {  
+  width: 50px;
+  height:50px;
+  display:inline-block; 
+  vertical-align:middle;/*줄간격 내부에서의 수직위치: middle*/
+}
+
+table{
+  margin-top:10px;
+}
+table, td{
+  border: 1px solid blue;
+  border-collapse:collapse;
+}
+td{
+  width: 100px;
+  height:100px;
+ 
+}
+td.top{
+  vertical-align:top;
+}
+td.bottom{
+  vertical-align:bottom;
+}
+</style>
+</head>
+<body>
+
+<!-- <div class="parent"> -->
+<!--   <div class="red">A</div><div class="blue">B</div> -->
+<!-- </div> -->
+
+<div class="parent">
+  <span class="red inline1"></span>
+  <span class="blue inline2"></span>TEXT
+</div>
+<table>
+<tr>
+  <td class="top">TOP</td>
+  <td>BASELINE</td>
+  <td class="bottom">BOTTOM</td>
+</tr>
+</table>
+</body>
+</html>
+
+<!-- <inline>
+	 크기지정X, 위치지정X
+	 content크기에 의해 결정
+	 위치는 부모요소에 의해 결정
+	 가로 중앙 정렬시 부모요소에 text-align을 center로 설정...
+	 수직 중앙 정렬시 부모요소에 line-height를 부모요소의 height만큼 지정..
+
+	vertical-align은 inline요소의 수직정렬담당
+	<p><span></span>Message</p>
+	 	 
+	 <block>
+	 크기지정O, 위치지정O
+	 가로 중앙 정렬시 좌우마진을 auto 
+	 세로 중앙 정렬시 부모요소position을 relative 
+	 				  block요소position을 absoulte를
+	 				  주어서 직접계산했었다.. -->
+	 
+	 
+	 
+	 

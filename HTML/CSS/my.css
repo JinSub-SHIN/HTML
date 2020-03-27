@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+/* CSS주석 */
+*{
+	box-sizing: border-box;	
+}
+
+body {
+	background-color: lightblue !important;
+}
