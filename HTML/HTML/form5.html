@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Form5.HTML</title>
+</head>
+<body>
+	<h1>HTML5</h1>
+	<form id="f1" action="a.jsp" autocomplete="off"></form>
+	<label>ID:</label>
+	<input form="f1" placeholder="ID를 입력하세요" name="id" required autofocus>
+	<br>
+	<!-- form id값을 부여함으로써 하위라는 것을 알려줌 -->
+	<label>NUMBER:</label>
+	<input form="f1" type="number" min="1" max="10" value="5" disabled>
+	<br>
+	<label>EMAIL:</label>
+	<input form="f1" type="email" placeholder="a@b.com" readonly>
+	<br>
+	<label>SEARCH:</label>
+	<input form="f1" type="search" value="검색">
+	<br>
+	<label>DATE:</label>
+	<input form="f1" type="date">
+	<br>
+	<label>TEL:</label>
+	<input form="f1" type="tel">
+	<br>
+	<label>URL:</label>
+	<input form="f1" type="url">
+	<br>
+	<label>RANGE:</label>
+	<input form="f1" type="range" value="5" min="1" max="10">
+	<br>
+	<input form="f1" type="submit" value="전송">
+
+	<hr>
+	<form action="a.jsp">
+		<label>ID:</label> <input placeholder="ID를 입력하세요" name="id" required autofocus>
+		<br> 
+		<input type="button" value="버튼1">
+		<br> 
+		<input type="submit" value="전송">
+		<br>
+		<button>전송2</button>
+	</form>
+	<button>버튼2</button>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/operator.html</title>
+
+<script>
+	//산술연산자 +,-,*,/,%
+	var a,b,c;
+	a=3;
+	b=5;
+	console.log(a+b); // 8
+	console.log(a/b); // 0.6
+	console.log(a+c); // NaN -> not a number
+	
+	c="4";
+	console.log(a+c); // 34 문자열
+	console.log(c+a); // 43 문자열
+	
+	console.log(a-c); // -1 숫자
+	console.log(c-a); // 1 숫자
+	
+	c=true;
+	console.log(a+c); // 4
+	console.log(a-c); // 2
+	
+	c=0;
+	console.log(a/c); // Infinity
+	
+	console.log(a/c+1); // Infinity
+	
+	//증감연산자
+	a=3;
+	c = a++;
+	console.log(a+ ":" +c); // 4:3
+	
+	a=3;
+	c= ++a;
+	console.log(a+ ":" +c); //4:4
+	
+	//비교연산자 : >, <, >=, <=, !=, ==
+	console.log(a>10); //false
+	console.log(a%2==0); //true
+	console.log("hello" == "hello"); //문자열비교 
+	a=4; c='4'; 
+	console.log(a == c); //true
+	console.log(a === c); //자료형과 값이 모두같아야 true
+	
+	//논리연산자 : &&, ||, !
+	a=4;
+	console.log(a<10 && a%2==0); //true
+	console.log(a>10 && a%2==0); //false
+	
+	console.log(a<10 || a%2==0); //true
+	console.log(a>10 || a%2==0); //true
+	
+	console.log(!(a>10 && a%2==0)); //true
+	
+	//삼항연산자
+	console.log(a>10?"10보다큼":"10보다크지않음");
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>

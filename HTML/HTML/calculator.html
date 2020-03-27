@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/html/calculator.html</title>
+<style>
+table {
+	border: 1px solid;
+	margin: 150px auto;
+	background-color: purple;
+}
+
+td {
+	border: 1px solid;
+	padding: 15px 25px;
+	text-align: center;
+}
+
+button {
+	border: 2px solid;
+	padding: 15px 25px;
+	text-align: center;
+	background-color: black;
+	color:white;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+input {
+	margin: 0px 0px 0px 0px;
+	text-aling: right;
+	border: none;
+}
+
+#display {
+	background-color: purple;
+	font-size: 15px;
+	font-weight: bold;
+	color:white;
+	width : 400px;
+	height: 40px;
+}
+
+#result {
+	background-color: purple;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: right;
+	color:white;
+	width : 400px;
+	height: 35px;
+}
+
+</style>
+
+<script>
+	window.addEventListener("load", function() {
+
+		var btnObjs = document.querySelectorAll("button.p");
+
+		for (var i = 0; i < btnObjs.length; i++) {
+			btnObjs[i].addEventListener("click", function() {
+				var display = document.getElementById('display');
+				var value = this.value;
+				display.value = display.value + value;
+			})
+		}
+
+		var totalObj = document.querySelector("#total");
+
+		totalObj.addEventListener("click", function() {
+			var result = eval(display.value);
+			var re = document.querySelector("#result");
+			re.value = result;
+		});
+
+		var clearObj = document.querySelector("#clear");
+
+		clearObj.addEventListener("click", function() {
+			document.getElementById('display').value = "";
+			document.getElementById('result').value = "";
+		});
+
+	})
+</script>
+</head>
+<body>
+
+	<table>
+		<tr>
+			<td colspan="4"><input type="text" id="display"></td>
+		<tr>
+			<td colspan="4"><input type="text" id="result">
+		</tr>
+		<tr>
+			<td><button class="p" value="7">7</button></td>
+			<td><button class="p" value="8">8</button></td>
+			<td><button class="p" value="9">9</button></td>
+			<td><button class="p" value="/">/</button></td>
+		</tr>
+		<tr>
+			<td><button class="p" value="4">4</button></td>
+			<td><button class="p" value="5">5</button></td>
+			<td><button class="p" value="6">6</button></td>
+			<td><button class="p" value="*">*</button></td>
+		</tr>
+		<tr>
+			<td><button class="p" value="1">1</button></td>
+			<td><button class="p" value="2">2</button></td>
+			<td><button class="p" value="3">3</button></td>
+			<td><button class="p" value="-">-</button></td>
+		</tr>
+		<tr>
+			<td><button class="p" value="0">0</button></td>
+			<td><button class="p" id="clear" value="C">C</button></td>
+			<td><button id="total" value="=">=</button></td>
+			<td><button class="p" value="+">+</button></td>
+		</tr>
+
+	</table>
+
+</body>
+</html>

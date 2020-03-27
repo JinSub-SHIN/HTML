@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/storage.html</title>
+
+<script>
+var value = localStorage.getItem("name");	
+console.log(value);
+if(value == null){
+	window.localStorage.setItem("name", "신진섭");
+} else {
+	localStorage.removeItem("name");
+}
+
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

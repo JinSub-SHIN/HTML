@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/loaction.html</title>
+<script>
+window.onload=function(){
+	var btObj = document.querySelector("button");
+	var clickCnt = 0;
+	btObj.addEventListener("click", function(){
+		if(clickCnt == 0){
+			location.href="/html/login.html";	
+		}
+		clickCnt++
+		
+	})
+}
+</script>
+</head>
+<body>
+
+<button>URL변경</button>
+</body>
+</html>

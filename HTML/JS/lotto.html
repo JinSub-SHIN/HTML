@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/lotto.html</title>
+<style>
+body {
+	text-align: center;
+}
+
+div {
+	width: 50%;
+	height: 200px;
+	margin: auto;
+	border: 1px solid;
+}
+</style>
+<script>
+	function init() {
+		var btObj = document.querySelector("button");
+		var divObj = document.querySelector("div");
+
+		btObj.addEventListener("click", function() {
+			divObj.innerHTML = '';
+			var arr = new Array(6);
+			for (var i = 0; i < arr.length; i++) {
+				var r = parseInt(Math.random() * 45) + 1;
+				arr[i] = r;
+				for (var j = 0; j < i; j++) {
+					if (arr[i] == arr[j]) {
+						i--;
+						break;
+					}
+				}
+			}
+			for (var i = 0; i < arr.length; i++) {
+				divObj.innerHTML += arr[i] + '<br>';
+			}
+
+		});
+	}
+
+	window.addEventListener("load", init);
+</script>
+
+</head>
+
+<body>
+
+	<div></div>
+	<button>로또숫자 만들기</button>
+</body>
+</html>

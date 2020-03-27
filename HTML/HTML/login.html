@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>login.html</title>
+<link rel="stylesheet" 
+	  type="text/css"
+	  href="/html/css/my.css">
+<!-- id선택자는 다른 선택자와 중복되면안된다. -->
+<!-- class속성의 값은 중복되도 가능하다. / 여러개를 공백을 한칸뛰어서 나열 가능 -->
+<style> 
+/* CSS는 덮어쓴다 (순서중시) */
+	body{
+		background-color: darkgrey !important;
+	}
+	td{
+		border-bottom : 1px solid;		
+	}
+	.bottom{
+		text-align: center; font-weight: bold;
+	}
+	table{
+		margin: auto;
+	}
+	
+</style>
+
+</head>
+<body>
+
+<p style="text-align: center; font-weight: bold; font-size: 40px">Login<br>
+<form action="/html/login.jsp">
+<table style="width:50%;border:1px solid;">
+	<tr>
+		<td class="bottom">
+		<label >ID</label></td>
+		<td><input type="text" 
+				name="id" 
+				placeholder="ID를입력하세요" 
+				autofocus required>
+		</td>
+	</tr>
+	<tr>	
+		<td style="text-align: center; font-weight: bold">
+		<label>PassWord</label></td>
+		<td><input type="password"
+			name="pwd"
+			placeholder="비밀번호를 입력하세요"
+			required>
+		</td>
+	</tr>
+	<tr><td colspan="2" style="text-align: center; font-weight:bold;">
+		<input type="checkbox">
+		<label>ID저장하기</label>
+	</td></tr>
+	<tr>
+		<td style="text-align: center;">
+		<button>로그인</button></td>
+		<td style="text-align: center;"><input type="reset" value="CLEAR"></td>
+	</tr>
+	<tr>
+		<td style="text-align: center;"><a href="#">ID찾기</a>&nbsp;&nbsp;
+		</td>
+		<td style="text-align: center;"><a href="#">비밀번호찾기</a>
+		</td>
+	</tr>
+			
+	
+</table>
+</form>
+
+
+</body>
+</html>

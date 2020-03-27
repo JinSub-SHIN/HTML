@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/window.html</title>
+<style>
+</style>
+<script>
+window.addEventListener("load", function(){
+	var btOpenObj = document.querySelector("button:first-child");
+	btOpenObj.addEventListener("click", function(){
+		var url = '/html/login.html';
+		var name = 'login';
+		var option = 'width=250px height=250px';
+		window.open(url, name, option);
+	});
+	var num = "1";
+	var d = new Date();
+	var y = d.getFullYear();
+	var mon = d.getMonth()+1;
+	var dt = d.getDate();
+	var h = d.getHours();
+	var mi = d.getMinutes();
+	var s = d.getSeconds();
+	var intervalId;
+	
+	var btIntervalObj = 
+		document.querySelector("button:nth-child(2)");
+	var dirObj = document.querySelector("div");
+	btIntervalObj.addEventListener("click", function(){
+		var millsec = 1000; //1초
+		intervalId = window.setInterval( function(){
+			//console.log("1초지났습니다.");
+			var d = new Date();
+			var y = d.getFullYear();
+			var mon = d.getMonth() + 1;
+			var dt = d.getDate();
+			var h = d.getHours();
+			var mi = d.getMinutes();
+			var s = d.getSeconds();
+			dirObj.innerHTML = 
+				  y+"년 " + mon + "월 " + dt +"일 " 
+				+ h+":" + mi+":" + s;
+		} , millsec);
+	});
+	
+	var btnClearItv = document.querySelector('button:nth-child(3)');
+	btnClearItv.addEventListener('click', function(){
+		window.clearInterval(intervalId);
+		
+	});
+	
+	var timeoutObj = document.querySelector("button:nth-child(4)");
+	timeoutObj.addEventListener("click", function(){
+		var millsec = 5*1000;
+		window.setTimeout(function(){
+			var url='/html/login.html';
+			var name = 'login1';
+			var option = 'width=250px height=250px';
+			window.open(url, name, option);
+			
+		}, millsec);
+	})
+	
+	
+});
+
+</script>
+</head>
+<body>
+
+	<button>open</button>
+	<button>setInterval</button>
+	<button>clearInterval</button>
+	<button>timeout</button>
+	
+<div>
+</div>
+
+</body>
+</html>

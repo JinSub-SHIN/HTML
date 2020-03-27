@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/process.html</title>
+<style>
+div{
+	border:1px solid;
+}
+</style>
+<script>
+	function init() {
+		//p요소에서 click되면 console에 출력하시오
+
+		//1.p요소용 객체를 DOM에서 찾기
+		//		var pObj = document.getElementById("p1");
+		var pObj = document.querySelector("p");
+		var divObj = document.querySelector("div");
+
+		//객체의 property들..
+		console.log(pObj);
+		console.log(pObj.id); // p1 --> 속성용 프로퍼티
+		console.log(pObj.innerHTML); // 단락1 --> 객체의 특수프로퍼티
+		//property 개인의 가지고있는 속성 (객체의 속성을 말할때)
+		//Attribute <tag>의 속성을 부를떄
+
+		//객체의 메소드
+		//2.이벤트핸들러 등록. 이벤트종류:click, 할일:콜백함수
+		pObj.addEventListener("click", function() {
+			console.log("클릭되었습니다");
+			if(divObj.style.visibility == "hidden"){
+				divObj.style.visibility = "visible";
+			} else{
+			divObj.style.visibility = "hidden";
+			}
+		});
+
+		//		pObj.onclick = function(){
+		//			console.log("클릭되었습니다");
+		//		}
+	}
+
+	window.addEventListener("load", init);
+</script>
+</head>
+<body>
+	<p id="p1">단락1</p>
+	<div>블럭1</div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/scope.html</title>
+<script>
+	var gv1 = "전역변수"; //window객체에 저장...
+	console.log(window.gv1);
+	console.log(gv1);
+
+	gv2 = "전역변수2";
+	console.log(window.gv2);
+
+	for (var gv3 = 0; gv3 < 2; gv3++) {
+		console.log(gv3);
+	}
+	console.log(window.gv3);
+
+	var gv4 = function(p) {
+		var lv1 = "지역변수";
+		console.log("전역변수gv1값:" + gv1);
+		console.log("지역변수lv1값:" + lv1);
+	}
+
+	gv4();
+
+	var gv5 = function() {
+		var lv2 = "outer";
+		var lv1 = function() {
+			console.log("전역변수gv1값:" + gv1);
+			console.log("outer function의 지역변수lv2:" + lv2);
+			console.log("inner function called");
+		};
+		lv1();
+	};
+
+	gv5();
+
+	var gv6 = function() {
+		gv7 = "전역변수gv7";
+		var lv = function() {
+			gv8 = "gv8";
+		}
+		lv();
+		console.log("inner function의 gv8값:" + gv8);
+	}
+
+	gv6();
+	console.log("var없이 선언된 전역변수이다" + gv7);
+
+	//오류 : lv1 is not defined
+	//console.log("함수밖에서 지역변수lv1값:" +lv1);
+</script>
+</head>
+<body>
+
+</body>
+</html>

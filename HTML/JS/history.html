@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/history.html</title>
+<script>
+
+// window.addEventListener("load", )
+window.onload = function(){
+	
+	var btObjs = document.querySelectorAll("button");
+	
+	
+	for(var i=0 ; i<btObjs.length; i++){
+			(function(i){
+		btObjs[i].onclick = function(){		
+			var value = 0;
+			switch(i){
+			case 0:
+				value = -1;
+				break;
+			case 1:
+				value = 1;
+				break;
+			}
+			window.history.go(value);	
+		};
+	})(i);
+	}
+	
+// 	var btBackObj = document.querySelector("button:first-child");
+// 	btBackObj.onclick = function(){
+// 		window.history.go(-1);
+// 	};
+	
+// 	var btFrontObj = document.querySelector("button:last-child");
+// 	btFrontObj.onclick = function(){
+// 		window.history.go(+1);
+// 	}
+};
+
+</script>
+</head>
+<body>
+
+<button>뒤로</button>
+<button>앞으로</button>
+
+</body>
+</html>

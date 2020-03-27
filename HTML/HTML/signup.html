@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/signup.html</title>
+<style>
+div{
+	background-color : orange;
+	border: 1px solid;
+	width: 550px;
+}
+
+td{
+	text-align : center;
+	font-weight: bold;
+}
+
+.sub{
+	visibility: hidden;
+}
+
+label:after {
+	content:" : "
+}
+
+
+
+</style>
+</head>
+<body>
+<form autocomplete="off">
+<div>
+<table>
+	<tr id="id">
+		<td>
+		<label>ID</label>
+		</td>
+		<td>
+		<input type="text"
+					 placeholder="ID"
+					 required>
+		</td>
+		<td>
+		<input type="button" value="중복확인">
+		</td>
+	</tr>
+	<tr id="pwd">
+		<td>
+		<label>비밀번호</label>
+		</td>
+		<td>
+		<input type="password"
+								 placeholder="비밀번호"
+								 required>
+		</td>
+	</tr>
+	<tr id="checkpwd">
+		<td>
+		<label>비밀번호확인</label>
+		</td>
+		<td>
+		<input type="password"
+								 placeholder="비밀번호"
+								 required>
+		</td>
+	</tr>
+	<tr id="name">
+		<td>
+		<label>이름</label>
+		</td>
+		<td>
+		<input type="text"
+								 placeholder="이름"
+								 required>
+		</td>
+	</tr>
+	<tr id="gender">
+		<td>
+		<label>성별</label>
+		</td>
+		<td>
+		<input type="radio" name="gen">남
+		</td>
+		<td>
+		<input type="radio" name="gen">여
+		</td>
+	</tr>
+	<tr id="create">
+		<td class="sub">
+		<input type="submit" value="가입하기">
+		</td>
+		<td>
+		<input type="reset" value="CLEAR">
+		</td>
+	</tr>
+	
+</table>
+</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/function.html</title>
+<script>
+	var f1;
+	f1 = function() {
+		console.log("Hello");
+	};
+
+	var f2 = function(p1, p2) {
+
+		console.log(p1 + p2);
+	};
+	function f3(p1, p2) {
+		return p1 + p2;
+	};
+
+	f1(); //함수호출
+	f2(3, 5); // 3+5
+	var result = f3(3, 5);
+	console.log(result); //8
+
+	//인자개수와 매개변수개수가 일치하지 않을 경우..
+	f2(1, 2, 3); // 1+2
+	f2(1); // NaN
+
+	//반환값이 없는 함수호출후 반환변수에 대입하는 경우
+	var result = f2(3, 5);
+	console.log(result); // undefined
+
+	//이름없는 함수를 호출하는 방법(1번만사용할것임)
+	(function() {
+		console.log("이름없는 함수가 호출됨...");
+	})();
+
+	(function(p) {
+		console.log(p);
+	})(999);
+
+	var f4 = function() {
+		console.log("start");
+		var v1 = 10;
+		var v2 = function() {
+			console.log("inner function호출됨...")
+		};
+		//v2();
+		return v2;
+	};
+
+	var result = f4();
+	result();
+
+	var f5 = function() {
+		var v = function() {
+			for (var i = 0; i < 5; i++) {
+				console.log(i);
+			}
+		};
+		v();
+	};
+
+	f5();
+
+	var f6 = function(p) {
+		p(); //콜백함수
+	};
+
+	f6(function() {
+		console.log("나는 함수형 인자");
+	});
+
+	f6(f1);
+</script>
+</head>
+<body>
+
+</body>
+</html>

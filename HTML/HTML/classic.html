@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">        <!-- 메타태그는 END가 반드시없어야한다 -->
+<title>classic.html</title>
+</head>
+<body>
+	<!-- HTML주석 -->
+<h1>CLASSIC HTML</h1>
+<h5>제목5</h5>
+
+<p> <!-- 닫아도되고 안닫아도된다 -->
+	단락1<br> 
+	단락1의 내용A<br>
+	단락1의 내용B<br>
+	
+</p>
+<p id="p1">목록<br>
+	<ol style="list-style-type: upper-roman;">
+		<li>사과</li>
+		<li>오렌지</li>
+		<li>바나나</li>		
+	</ol>
+	<ul style="list-style-type: square;">
+		<li>사과</li>
+		<li>오렌지</li>
+		<li>바나나</li>	
+	</ul>
+
+<p>표<br>
+<table style="width:300px;border:1px solid;">
+	<thead>
+	<tr><th>1</th><th>2</th><th>3</th></tr>
+	</thead>
+	<tbody>
+	<!-- 열결합 : colspan, 행결합:rowspan -->
+	<tr><td style="border: 1px dotted" colspan="2">A
+	 	B</td>
+		<td rowspan="2" style="border:5px double;">C</td></tr>
+	<tr><td>D</td><td>E</td><td>
+	</tbody>
+	<tfoot>
+	<tr><td>END</td><td>END</td><td>END</td></tr>
+	</tfoot>
+</table>
+
+<p>이미지<br>
+<!--	<img src="./images/myphoto.jpg" alt="못찾았당께로"><br>
+		<img src="../images/myphoto.jpg" alt="못찾았당께로">
+	-->
+	<!--  /웹프로젝트명 -->
+	<img src="/html/images/myphoto.jpg" alt="못찾았당께로"><br>
+	<img src="http://localhost:8888/html/images/myphoto.jpg" alt="못찾았당께로"><br>
+	<img alt="못찾았당께로" src="/html/images/myphoto.jpg" width="100px" height="100px"><br>
+	<img alt="못찾았당께로" src="/html/images/myphoto.jpg" width="50%" height="30%">
+
+<p>링크<br>
+	<a href="http://www.daum.net">다음</a>&nbsp;&nbsp;&nbsp;
+	<a href="http://www.google.com">구글</a>
+	<a href="http://192.168.0.178:8888/html/classic.html">지안</a><br>
+	<br>
+	<a href="/html/sub.html">!!!!!!!!!!무조건클릭!!!!!!!!!!!!!!</a><br>
+	<br>
+	<a href="#p1">단락2</a>
+</p>
+
+<p>영역<br>
+	<!-- div태그는 한줄을 모두 사용한다... -->
+	<div style="border: 3px solid blue;width:100px;height:100px;background-color: #777444; color: #fff; font-weight:bold;margin: 10px;padding:5px">DIV1</div>
+	<div style="border: 3px solid yellow;width:100px;height:100px;background-color: #554935; color: #fff; font-weight:bold; font-size: 30px;margin: 15px;padding: 10px">DIV2</div>
+	<span style="border: 3px solid red;width:100px;height:100px;background-color: yellow; margin: 10px;padding:5px">span1</span>
+	<span style="border: 3px solid grey;width:100px;height:100px;background-color: green; color: #ooo;margin: 10px;padding:5px">span2</span>
+	<br><br>	
+	div태그는 대표 블럭요소이다<br>
+	span태그는 대표 인라인요소이다<br>
+
+	<ol>
+		<li>블록요소 : 1줄을 모두 사용(자동줄바꿈).
+						크기지정가능
+				- div, table, tr, h1~h6, p, ol , ul, li
+		</li>
+		<li>인라인요소 : 자동줄바꿈안됨. 크기지정안됨.
+						 content(내용)만큼 크기 자동지정.
+						 상하마진무시
+				- span
+		</li>
+		<li>인라인블럭요소 : 자동줄바꿈안됨. 크기지정이가능
+				- img, td
+	</ol>
+
+<p>form관련태그<br>
+<form action="/html/sub.html" target="_blank">
+	<input><br>
+	<input type="button" value="클릭하면혼난다"><br>
+	택스트&nbsp;&nbsp;&nbsp;:<input type="text" name="t" 
+							 		maxlength="10"
+									placeholder="입력하면없어진다구">
+									<br>
+	패스워드:<input type="password" placeholder="입력하면없어진다구"><br>
+	<input type="checkbox" name="c" value="apple">나는&nbsp;&nbsp;&nbsp;<br>
+	<input type="checkbox" name="c" value="orange">공부&nbsp;&nbsp;&nbsp;<br>
+	<input type="checkbox" name="c" value="banana" checked="checked">한다&nbsp;&nbsp;&nbsp;<br>
+	<input type="radio" name="fruit" >너는<br>
+	<input type="radio" name="fruit" >공부<br>
+	<input type="radio" name="fruit" checked="checked">하니<br>
+	HIDDEN:<input type="hidden" name="h" value="hiddenValue"><br>
+	<!-- 서버로 전송하려면 name 속성을 결정해야한다 -->
+	<select name="s">
+		<option>자바</option>
+		<option selected>파이썬</option>
+		<option>R</option>
+	</select><br>
+	<textarea rows="5" cols="60"></textarea><br>	
+	<input type="button" value="이건클릭해야해!"><br>
+	<input type="submit" value="전송버튼"><br>
+	<input type="reset" value="CLEAR"><br>
+		
+</form>
+<hr>
+<form action="a.jsp" method="post" enctype="multipart/form-data">
+파일업로드:<input type="file" name="f1">
+<input type="submit" value="전송">
+</form>
+
+</body>
+</html>
