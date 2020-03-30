@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/dargdrop.html</title>
+<script>
+	window.addEventListener("load", function(){
+		
+		var imgObj = document.querySelector("#img");
+		var divObj = document.querySelector("#div");
+		imgObj.addEventListener("dragstart", function(event){
+			console.log("드래그시작!");			
+			event.dataTransfer.setData("text", event.target.id);
+		});
+		
+		divObj.addEventListener("dragover", function(event){
+			//drop될 대상객체의 기본이벤트는 반드시 막는다....
+			event.preventDefault();
+			event.stopPropagation();
+			console.log("안쪽으로 드래그되었음");
+		});
+		
+		divObj.addEventListener('drop', function(event){
+			//drop될 대상객체의 기본이벤트는 반드시 막는다
+			event.preventDefault();
+			event.stopPropagation();
+			var imgId = 
+				event.dataTransfer.getData('text');
+			console.log('drop ' + imgId);
+			
+			//imgId에 해당객체를 dom트리에서 찾기
+			var imgObj = 
+				document.querySelector("#"+imgId);
+			   //document.getElementById(imgId);
+			   
+			//div객체의 형제요소인  이미지객체를
+			//복사해서 div객체의 하위요소로 붙여넣기		
+			//this.append(imgObj);
+			//hint: eventHandler.html의 dom트리에 객체추가
+			//      createElement(), 
+			//
+			var imgObj2 = document.createElement('img');
+			var src = document.createAttribute('src');
+			src.value = imgObj.src;
+			
+			var width = document.createAttribute('width');
+			width.value= imgObj.width;
+			
+			var height = document.createAttribute('height');
+			height.value = imgObj.height;
+			
+			imgObj2.setAttributeNode(src);
+			imgObj2.setAttributeNode(width);
+			imgObj2.setAttributeNode(height);
+			this.append(imgObj2);
+		});
+		
+	})
+</script>
+</head>
+<body>
+<div id="div" style="width: 300px; height: 300px; border: 1px solid">
+</div>
+<img src="../images/myphoto.jpg" id="img"
+	 width="150px" height="150px"
+	 draggable="true"> <!-- 드래그가능 -->
+</body>
+</html>

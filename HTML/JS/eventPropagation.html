@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/eventPropagation.html</title>
+<style>
+div{
+	border:1px solid;
+	width: 300px;
+	background: ligtblue;
+}
+
+a{
+	background: yellow;
+	text-decoration: none;
+}
+</style>
+<script>
+	window.addEventListener("load", function(){
+		
+		var aObj = document.querySelector("a");
+		aObj.addEventListener("click", function(event){
+			alert("클릭되었습니다!");
+			this.style.backgroundColor="blue";
+			event.preventDefault();
+			event.stopPropagation(); //이벤트 전파막기
+		});
+		
+		var divObj = document.querySelector("div");
+		divObj.addEventListener("click", function(){
+			this.style.backgroundColor="red"; // a태그를 눌러도 div색상이 바뀐다..?!
+			
+		});
+		
+	})
+</script>
+</head>
+<body>
+<div>
+	<a href="https://www.daum.net">다음</a>
+</div>
+
+</body>
+</html>

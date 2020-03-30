@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/jq/eventhandler.html</title>
+<style>
+#select2{
+	display : none;
+}
+
+.none{
+	display : none;
+}
+
+.inline{
+	display: inline-block;
+}
+
+
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+
+<script>
+	$(document).ready(function(){
+		
+		var $btObj = $("button[type=button]");
+		var $formObj = $("form");
+		var $submitObj = $("button[type=submit]");
+		var $spans = $("form>fieldset>input[type=checkbox]~span");
+		
+		$btObj.click(function(){
+			alert("로그인성공!");
+		})
+		
+		$formObj.submit(function(event){
+			alert("form객체의 submit이벤트 발생!");
+			event.preventDefault();
+// 			this.action = "/html/signup.jsp";			
+		});
+		
+		$submitObj.submit(function(event){
+			alert("submit버튼객체의 click이벤트 발생!");
+			event.preventDefault();
+		});
+		
+		var $textObj = $("input[type=text]");
+		
+		$textObj.click(function(){
+			console.log("클릭했다능!");
+		});
+		
+		$textObj.focus(function(){
+			console.log("포커쓰했다능!");
+		});
+		
+		$textObj.keyup(function(){
+			var str = $(this).val();
+			$(this).val(str.toUpperCase());
+		});		
+		
+		var $checkObjs = $("form>fieldset>input[type=checkbox]");
+		
+		for(var i=0; i<$checkObjs.length; i++){
+			checkObj = $checkObjs[i];
+			var jqObj = $(checkObj);
+			jqObj.click(function(){
+				var fruit = this.nextSibling.innerHTML;
+				if(this.checked){
+					console.log(fruit+"선택됨");
+				}else{
+					console.log(fruit+"선택안됨");
+				}
+			});
+		}
+		
+		var $selectObj = $("#select1");
+		var $select2Obj = $("#select2");
+		
+		$selectObj.click(function(){
+			console.log("select객체의 click이벤트 발생!");
+		});
+		
+		$selectObj.change(function(){
+			console.log("select객체의 change이벤트 발생!");			
+				if($(this).val() == "JAVA"){
+	 				//id가 subject2인 객체의 html내용 바꾸기
+	 				var javaInnerHTML = "<option>JDBC</option>";
+	 				javaInnerHTML += "<option>JSP</option>";
+	 				javaInnerHTML += "<option>SPRING</option>";
+	 				$select2Obj.html(javaInnerHTML);	 				
+	 				$select2Obj.css("display", "block");
+	 			} else if($(this).val() == "Python"){
+	 				var pythonInnerHTML = "<option>Django</option>";
+	 				pythonInnerHTML += "<option>데이터분석</option>";
+	 				pythonInnerHTML += "<option>머신러닝</option>";
+	 				$select2Obj.html(pythonInnerHTML);
+	 				$select2Obj.css("display", "block");				
+	 			} else if($(this).val() == "HTML"){
+	 				var htmlInnerHTML = "<option>CSS</option>";
+	 				htmlInnerHTML += "<option>JavaScript</option>";
+	 				htmlInnerHTML += "<option>TypeScript</option>";
+	 				$select2Obj.html(htmlInnerHTML);
+	 				$select2Obj.css("display", "block");			
+	 			}
+				$select2Obj.css("display", "inline-block");		
+		});
+		
+		var $optionObj = $('<option>');
+		var $textObj = $(document.createTextNode("ORACLE"));
+		var $select3Obj = $('<select>');
+		var $attrObj = $(document.createAttribute("id"));
+		$attrObj.val("subject3");	
+		
+		$formObj.append($select3Obj); // 자식으로 추가
+		$optionObj.append($textObj); // 자식으로 추가
+		$select3Obj.append($optionObj); //자식으로 추가
+		$select3Obj.attr('id', $attrObj);	
+		
+	});
+
+</script>
+
+<script>
+// 	function init() {
+// 		var btObj = document.querySelector("button[type=button]");
+// 		//dom트리에서 form객체찾기
+// 		//dom트리에서 button[type=submit]객체찾기
+
+// 		var formObj = document.querySelector("form");
+// 		var submitObj = document.querySelector("button[type=submit]");
+// 		var spans = document.querySelectorAll("form>fieldset>input[type=checkbox]~span");
+
+// 		btObj.addEventListener("click", function() {
+// 			//console.log("click");
+// 			window.alert("로그인성공!");
+// 		})
+
+// 		//formObj객체에 이벤트핸들러추가
+// 		//이벤트종류 : submit
+// 		//자동 form의 action속성에 기술된 url로 전송
+// 		formObj.addEventListener("submit", function(event) {
+// 			alert("form객체의 submit이벤트 발생");
+// 			// 			event.preventDefault(); //기본이벤트핸들러 막기
+
+// 			this.action = "/html/signup.jsp";
+// 		})
+
+// 		//submitObj객체에 이벤트핸들러추가
+// 		//이벤트종류:click
+// 		//submit버튼은 click이벤트 발생후
+// 		// 자동 form의 submit이벤트가 발생함..
+// 		submitObj.addEventListener("click", function(event) {
+// 			alert("submit버튼객체의 click이벤트 발생");
+// 			// 			event.preventDefault(); //기본이벤트핸들러막기
+// 		})
+
+// 		var textObj = document.querySelector("input[type=text]");
+
+// 		textObj.addEventListener("click", function() {
+// 			console.log("클릭했다능!")
+// 		})
+
+// 		textObj.addEventListener("focus", function() {
+// 			console.log("뽀커쓰했다능!")
+// 		})
+
+// 		textObj.addEventListener("keyup", function() {
+// 			var str = this.value;
+// 			this.value = str.toUpperCase();
+
+// 		})
+
+// 		//dom트리에서 checkbox객체들 모두 찾기
+// 		var checkObjs = document
+// 				.querySelectorAll("form>fieldset>input[type=checkbox]");
+		
+// // 		for (var i = 0; i < checkObjs.length; i++) {
+// // 			var checkObj = checkObjs[i];
+// // 			if (checkObj.checked) {
+// // 				console.log("선택!");
+// // 			}
+// // 		}
+
+// // 		for (var i = 0; i < checkObjs.length; i++) {
+// // 			(function(a){
+// // 			checkObjs[a].addEventListener("click", function() {
+// // 				var fruit = spans[a].innerHTML;
+// // 				if (checkObjs[a].checked) {
+// // 					console.log(fruit + "선택됨");
+// // 				} else {
+// // 					console.log(fruit + "선택안됨");
+// // 				}
+// // 			});
+// // 		})(i);
+	
+// // 		}
+
+
+		
+
+// 		for(var i=0; i<checkObjs.length; i++){
+// 			checkObjs[i].addEventListener("click", function(){	
+				
+// 				var fruit = this.nextSibling.innerHTML;
+// 				if(this.checked){
+// 					console.log(fruit+"선택됨");
+// 				}else{
+// 					console.log(fruit+"선택안됨");
+// 				}
+// 			});
+// 		}
+		
+		
+// 		var selectObj = document.querySelector("#select1");
+// 		var select20bj = document.querySelector("#select2");
+	
+// 		selectObj.addEventListener("click", function(){
+// 			console.log("select객체의 click이벤트 발생");
+// 		});
+		
+// 		selectObj.addEventListener("change", function(){
+// 			console.log("select객체의 change이벤트 발생");
+// 			if(this.value == "JAVA"){
+// 				//id가 subject2인 객체의 html내용 바꾸기
+// 				select20bj.innerHTML = "<option>JDBC</option>";
+// 				select20bj.innerHTML += "<option>JSP</option>";
+// 				select20bj.innerHTML += "<option>SPRING</option>";
+// 				select20bj.style.display = "block";
+// 			} else if(this.value == "Python"){
+// 				select20bj.innerHTML = "<option>Django</option>";
+// 				select20bj.innerHTML += "<option>데이터분석</option>";
+// 				select20bj.innerHTML += "<option>머신러닝</option>";
+// 				select20bj.style.display = "block";				
+// 			} else if(this.value == "HTML"){
+// 				select20bj.innerHTML = "<option>CSS</option>";
+// 				select20bj.innerHTML += "<option>JavaScript</option>";
+// 				select20bj.innerHTML += "<option>TypeScript</option>";
+// 				select20bj.style.display = "block";				
+// 			}
+// 			select20bj.style.display = "inline-block";
+// 		});
+	
+// 		//DOM트리에 객체추가
+// 		//1)객체생성
+// 		var optionObj = document.createElement("option");
+// 		var textObj = document.createTextNode("ORACLE");
+// 		var select3Obj = document.createElement("select");
+		
+// 		var attrObj = document.createAttribute("id");
+// 		attrObj.value = "subject3";
+// 		//2)추가
+// 		formObj.append(select3Obj); // 자식으로 추가
+// 		optionObj.append(textObj); // 자식으로 추가
+// 		select3Obj.append(optionObj); //자식으로 추가
+// 		select3Obj.setAttributeNode(attrObj); // 속성을 추가
+		
+
+// 	};
+
+// 	window.addEventListener("load", init);
+</script>
+</head>
+<body>
+
+	<form action="/html/login.jsp">
+		<fieldset>
+			<input type="text" value="text"> <input type="checkbox"><span>사과</span>
+			<input type="checkbox"><span>오렌지</span> <input
+				type="checkbox"><span>바나나</span>
+		</fieldset>
+		<select id="select1">
+			<option>과목을 선택하세요</option>
+			<option>JAVA</option>
+			<option>Python</option>
+			<option>HTML</option>
+		</select> 
+		<select id="select2">
+		</select>
+		<br>		
+		<button type="button">버튼</button>
+		<button type="submit">전송</button>
+	</form>
+
+</body>
+</html>

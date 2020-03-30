@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/js/canvas.html</title>
+<script>
+window.addEventListener("load", function(){
+	var btLine = document.querySelector("#line");
+	var bttri = document.querySelector("#triangle");
+	var canvasObj = document.querySelector("canvas");
+	var ctx = canvasObj.getContext("2d");
+	
+	btLine.addEventListener("click", function(){
+		var x=0, y=0;
+		
+		ctx.moveTo(x,y); //시작위치
+		ctx.lineTo(x+500, y+500); //끝점
+		ctx.stroke(); //선긋기
+	})
+	
+	bttri.addEventListener("click", function(){
+		var x=0, y=0;
+		
+		ctx.strokeStyle="red";
+		ctx.moveTo(x+200,y+200);
+		ctx.lineTo(x+300,y+300);
+		ctx.stroke();
+		
+		ctx.beginPath(); //영역을 새롭게 설정한다... --> 또 다른 beginPath()를 만나기 전까지 하나의 영역으로 생각한다.
+		ctx.strokeStyle="blue";
+		ctx.moveTo(x+300,y+300);
+		ctx.lineTo(x+100,y+300);
+		ctx.stroke();
+		
+		ctx.beginPath();
+		ctx.strokeStyle="green";
+		ctx.moveTo(x+100,y+300);
+		ctx.lineTo(x+200,y+200);
+		ctx.stroke();
+		
+	})
+	
+	var btRectangle = document.querySelector("#rectangle");
+	btRectangle.addEventListener("click", function(){
+		var x=100, y=100;
+		var w=200, h=150;
+// 		ctx.strokeRect(x,y,w,h);
+		ctx.fillRect(x,y,w,h);
+	})
+	
+	var btClear = document.querySelector("#clear");
+	btClear.addEventListener("click", function(){
+		ctx.clearRect(0,0, 500,500);
+	})
+	
+	var btArc = document.querySelector("#arc");
+	btArc.addEventListener("click", function(){
+		var x=300, y=300;
+		var r=100;
+		var startDeg=0;
+		var endDeg=Math.PI;
+		var direct=false;
+		ctx.arc(x,y,r, startDeg, endDeg, direct);
+		ctx.fill();
+		ctx.fillStyle="yellow";
+		ctx.fill();
+	})
+	
+})
+</script>
+</head>
+<body>
+
+<canvas width="500px" height="500px" style="border:1px solid">
+
+</canvas>
+<button id="line">선긋기</button>
+<button id="triangle">삼각형</button>
+<button id="rectangle">사각형</button>
+<button id="clear">지우기</button>
+<button id="arc">원</button>
+</body>
+</html>

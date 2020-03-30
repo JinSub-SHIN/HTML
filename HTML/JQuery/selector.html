@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/jq/selector.html</title>
+
+<script>
+// window.addEventListener("load", function(){
+
+// 	//javascript
+// 	var liObjs = document.querySelectorAll("div>ul>li");
+// 	for(var i=0 ; i<liObjs.length ; i++){
+// 		console.log(liObjs[i].innerHTML);		
+// 	}	
+// });
+
+
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+
+<script>
+// 	jQuery(document).ready(function(){});
+
+// 	$(document).ready(function(){});
+
+	$(function(){
+		console.log('ready');
+		var liObjs = $('div>ul>li'); // jquery객체
+		for(var i=0; i<liObjs.length ; i++){
+			var liObj = liObjs[i]; //dom트리 일반객체
+			var jqObj = $(liObj);
+			console.log(jqObj.html()); // jquery용 메서드
+			
+		}
+		
+		//div객체찾기
+		//배경색바꾸기
+		
+		var divObj = $('div');
+		divObj.css('background-color', 'lightblue');
+		
+	});
+</script>
+
+</head>
+<body>
+
+	<div>
+		<ul>
+			<li>first</li>
+			<li>second</li>
+			<li>third</third>
+		</ul>
+	</div>
+
+</body>
+</html>
