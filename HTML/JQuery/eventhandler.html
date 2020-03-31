@@ -4,23 +4,21 @@
 <meta charset="UTF-8">
 <title>html/jq/eventhandler.html</title>
 <style>
-#select2{
-	display : none;
+#select2 {
+	display: none;
 }
 
-.none{
-	display : none;
+.none {
+	display: none;
 }
 
-.inline{
+.inline {
 	display: inline-block;
 }
-
-
-
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> -->
+<script src="/html/lib/jquery.min.js">
 </script>
 
 <script>
@@ -61,20 +59,33 @@
 			$(this).val(str.toUpperCase());
 		});		
 		
-		var $checkObjs = $("form>fieldset>input[type=checkbox]");
+		var checkObjs = $("form>fieldset>input[type=checkbox]");
+		//객체가 여러개로 반환될때는 $로 했어도 자바스크립트 객체로 반환된다.
+		//즉 $를 해줘야한다.
 		
-		for(var i=0; i<$checkObjs.length; i++){
-			checkObj = $checkObjs[i];
-			var jqObj = $(checkObj);
-			jqObj.click(function(){
-				var fruit = this.nextSibling.innerHTML;
-				if(this.checked){
+		$(checkObjs).each(function(index, element){
+			$(element).click(function(){
+				var fruit = $(this).next().html();
+				if($(this).prop('checked')){
 					console.log(fruit+"선택됨");
-				}else{
-					console.log(fruit+"선택안됨");
-				}
-			});
-		}
+	 				}else{
+	 				console.log(fruit+"선택안됨");
+	 				}						
+			});		
+		});
+// 		for(var i=0; i<$checkObjs.length; i++){
+// 			checkObj = $checkObjs[i];
+// 			var jqObj = $(checkObj);
+// 			jqObj.click(function(){
+// // 				var fruit = this.nextSibling.innerHTML;
+// 				var fruit = $(this).next().html();
+// 				if($(this).prop('checked')){
+// 					console.log(fruit+"선택됨");
+// 				}else{
+// 					console.log(fruit+"선택안됨");
+// 				}
+// 			});
+// 		}
 		
 		var $selectObj = $("#select1");
 		var $select2Obj = $("#select2");
@@ -276,10 +287,8 @@
 			<option>JAVA</option>
 			<option>Python</option>
 			<option>HTML</option>
-		</select> 
-		<select id="select2">
-		</select>
-		<br>		
+		</select> <select id="select2">
+		</select> <br>
 		<button type="button">버튼</button>
 		<button type="submit">전송</button>
 	</form>

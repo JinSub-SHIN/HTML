@@ -43,11 +43,32 @@ label:after {
 		var $textIdObj = $("#inputId");
 		var $formObj = $("form");
 		$btDupchkObj.click(function(){
-			console.log("중복확인클릭");
+			
+			// /html/idDupChk.jsp를 요청 AJAX요청
+			// 전송할데이터.. 사용자가 입력한 ID값..
+			// 응답성공
+			// 가입하기 버튼보여주기..
+			$formObj.attr('action', "/html/idDupChk.jsp");
+			var data = 'id=' + $('#inputId').val();
+			$.ajax({
+			    url : $formObj.attr("action"),
+			    data : data,
+			    success : function(jsonObj){
+			    	if(jsonObj.status == 1){
+			    		alert(jsonObj.msg);
+			    		$btSignupObj.removeClass('hide');
+						$btSignupObj.addClass('show');
+			    	} else {
+			    		alert(jsonObj.msg);
+			    		$('#inputId').focus();
+			    	}
+			    }
+			})
+			
 // 			$btSignupObj.css("visibility", "visible");
 // 			$btSignupObj.css("display", "inline-block");
-			$btSignupObj.removeClass('hide');
-			$btSignupObj.addClass('show');
+					
+			
 		})
 		
 		$textIdObj.focus(function(){

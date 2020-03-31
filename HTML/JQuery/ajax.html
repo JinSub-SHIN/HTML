@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/jq/ajax.html</title>
+<script src="/html/lib/jquery.min.js"></script>
+<script>
+$(function(){
+	$('form').submit(function(){
+		var action = $(this).attr("action");
+		$.ajax({ url:action, //전송할 URL
+				 success:function(responseData){ //응답성공시...
+					 //매개변수 응답값
+// 					 alert(responseData);
+				 	 $('div').html(responseData);
+				 }
+			//javascript에서 객체를 의미하는것 { }			 
+		});
+		return false;
+	})
+});
+</script>
+
+</head>
+<body>
+	<div id="result" style="width: 300px; height: 300px"></div>
+	<form action="/html/signup.jsp">
+		<button>가입</button>
+	</form>
+</body>
+</html>

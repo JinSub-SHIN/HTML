@@ -4,141 +4,204 @@
 <meta charset="UTF-8">
 <title>html/jq/semantic.html</title>
 <style>
-
-*{
-	margin: 0; padding: 0;
+* {
+	margin: 0;
+	padding: 0;
 }
 
-nav>ul>li>a{
-	color : black;
+nav>ul>li>a {
+	color: black;
 	text-decoration: none;
 }
 
-nav>ul>li>a:hover{
+nav>ul>li>a:hover {
 	background-color: yellow;
 	font-weight: bold;
 }
 
-
-ul{
-	list-style-type : none; height: 50px; line-height: 50px;
+ul {
+	list-style-type: none;
+	height: 50px;	
 	text-align: center;
 }
 
-.menu{
+.menu {
 	display: inline-block;
 	width: 150px;
 	text-align: center;
 	vertical-align: middle;
 }
 
-div{
-	border:1px solid;
+div {
+	border: 1px solid;
 	background-color: orange;
 	font-size: 15px;
 }
 
-nav{
-	border:1px solid;
+nav {
+	border: 1px solid;
 	background-color: grey;
-	
 }
 
-.section{
-	
-	border:2px solid;
-	background-color: white;	
+.section {
+	border: 2px solid;
+	background-color: white;
 	padding: 10px 10px 40px 10px;
+	height: 300px;
 }
 
-.head{
+.head {
 	border: 1px solid;
 	background-color: pink;
 	text-align: center;
 }
 
-li{
-	list-style-type: none;
-	display: inline-block;
+li {
+	list-style-type: none;	
 }
 
-.right{
-	width : 15%;
+.right {
+	width: 25%;
+	height: 90px;
 	text-align: center;
-	border:1px solid;
-	background-color : darkgrey;
-	float:right;
-	padding : 30px 0px;
+	border: 1px solid;
+	background-color: darkgrey;
+	float: right;
+	padding: 30px 0px;
 }
 
-
-.left{
-	width : 70%;
-	height:70px; border:2px solid;
-			
+.left {
+	width: 70%;
+	height: 150px;
+	border: 2px solid;
+	overflow: auto;
 }
 
-.a{
-	width : 70%;
-	height:70px; border:2px solid;
-	overflow:auto;	
+.a {
+	width: 70%;
+	height: 150px;
+	border: 2px solid;
+	overflow: auto;
 }
 
-footer{
-	position:relative;
-
-    bottom:0;
-
-    width:100%;
-
-    height:70px;   
-
-    background:#ccc;
+footer {
+	position: relative;
+	bottom: 0;
+	width: 100%;
+	height: 70px;
+	background: #ccc;
 }
 
-#tall{
-	
+img{
+	width: 70px;
+	height: 70px;
 }
 
 </style>
+<script src="/html/lib/jquery.min.js"></script>
+<script>
+	$(document).ready(function() {
+		
+		$.ajax({
+			url: "/html/productList.jsp",
+			success:function(jsonObjs){	
+					var tableObj = $('<table>');
+				$(jsonObjs).each(function(index, product){					
+					console.log(index +":" +product.prod_no +":" + product.prod_name);
+					// document.createElement("div")와같음...
+					var innerDiv = '<tr>';
+						innerDiv += '<td><img src="/html/images/' + product.prod_no + '.jpg"></td>';
+						innerDiv += '<td><ul>'						
+					innerDiv += '<li>';
+					innerDiv += "제품번호 : "+product.prod_no;
+					innerDiv += '</li>';
+					innerDiv += '<li>';
+					innerDiv += "제품명 : "+product.prod_name;
+					innerDiv += '</li>';
+					innerDiv += '<li>';
+					innerDiv += "가격 : "+product.prod_price;
+					innerDiv += '</li>';					
+					innerDiv += '</ul>';
+					innerDiv += '</td>';
+					innerDiv += '</tr>';
+					tableObj.append(innerDiv);										
+					$("section>article.left").append(tableObj);
+				});
+			}
+		});
+		
+		
+
+		var loginObjs = $("nav>ul>li>a").click(function() {
+			//section영역의 내용을 모두 지우기.
+			var sectionObj = $("section");
+			sectionObj.empty();
+
+			//현재객체의 href속성값
+			var href = $(this).attr('href');
+			console.log(href);
+			switch (href) {
+			case '/html/jq/login.html':
+				// 				$('section').html("로그인페이지");
+				$.ajax({
+					url : href,
+					success : function(responseData) {
+						sectionObj.html(responseData);
+					}
+				})
+				break;
+			case '/html/jq/signup.html':
+				// 				$('section').html("가입페이지");
+				$.ajax({
+					url : href,
+					success : function(responseData) {
+						sectionObj.html(responseData);
+					}
+				})
+				break;
+			}
+			return false; //기본이벤트처리막기 + 이벤트전파막기
+		});		
+		
+	})
+</script>
+
 </head>
 <body>
-<!-- 해더 = 머리글 -->
-<header>
-<div class="head">
-	<h1 id="id1">SEMANTIC.HTML</h1>
-</div>
-<br>
-</header>
-	<nav>	
-		<ul>			
-			<li class="menu"><a href="/html/login.html" target="_blank">로그인</a></li>
-			<li class="menu"><a href="/html/signup.html" target="_blank">가입</a></li>	
-		</ul>	
+	<!-- 해더 = 머리글 -->
+	<header>
+		<div class="head">
+			<h1 id="id1">SEMANTIC.HTML</h1>
+		</div>
+		<br>
+	</header>
+	<nav>
+		<ul>
+			<li class="menu"><a href="/html/jq/login.html" target="_blank">로그인</a></li>
+			<li class="menu"><a href="/html/jq/signup.html" target="_blank">가입</a></li>
+		</ul>
 	</nav>
 	<br>
 	<div class="section">
-<section>
-	<aside class="right">광고1</aside>	
-	
-	<article class="left">IOC올림픽</article><br>	
-    <aside class="right">연관정보</aside>
-	<article class="a">야구<br>
-						  두산베어스<br>
-						  LG트윈스<br>
-						  MLB<br>
-						  etc...<br>	
-	</article>
-	
-	
-</section>
+		<section>
+			<aside class="right">광고1</aside>
+
+			<article class="left"></article>
+			<br>
+			<aside class="right">연관정보</aside>
+			<article class="a">
+				야구<br> 두산베어스<br> LG트윈스<br> MLB<br> etc...<br>
+			</article>
+
+
+		</section>
 	</div>
-	<br>	
-<footer>
-	<div>이용약관 · 운영정책 · 청소년보호정책 · 개인정보처리방침 · 고객센터</div>
-	<div>Copyright CoCoa Corp. All rights reserved.</div>
-	<div>경기도 성남시 분당구 삼평동 대왕판교로 670 연락처:031-000-0000</div>
-</footer>
+	<br>
+	<footer>
+		<div>이용약관 · 운영정책 · 청소년보호정책 · 개인정보처리방침 · 고객센터</div>
+		<div>Copyright CoCoa Corp. All rights reserved.</div>
+		<div>경기도 성남시 분당구 삼평동 대왕판교로 670 연락처:031-000-0000</div>
+	</footer>
 
 </body>
 </html>

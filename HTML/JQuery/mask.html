@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html/jq/mask.html</title>
+<script src="/html/lib/jquery.min.js"></script>
+<script>
+	/*
+	 $(function() {
+	 $("form").submit(function() {
+	 $.ajax({
+	 url : $("form").attr("action"),
+	 success : function(jsonObj) {					
+	 $(jsonObj.stores).each(function(index, store) {
+	 if (store.remain_stat == 'plenty') {
+	 console.log(store.name + "재고많음(100개이상)");
+	 } else if (store.remain_stat == 'few') {
+	 console.log(store.name + "재고적음(10개미만)");
+	 } else {
+	 console.log(store.name + "재고소진 혹은 판매중지");
+	 }
+	 });
+	 }
+	 });
+	 return false;
+	 })
+	 });
+	 */
+</script>
+</head>
+<body>
+	<div id="map" style="width: 800px; height: 700px;"></div>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8c32b6e8d1809680c068bfe3660d9563"></script>
+	<script>
+	
+		var lat;
+		var lng;	
+		
+		var container = document.getElementById('map');
+		var options = {
+			center : new kakao.maps.LatLng(37.402044, 127.108570),
+			level : 3
+		};
+		var map = new kakao.maps.Map(container, options);	
+		
+		var markerfunction = function(lat, lng){
+			var markerPosition = new kakao.maps.LatLng(lat, lng);
+			var marker = new kakao.maps.Marker({
+				position : markerPosition
+			})
+			marker.setMap(map);
+			var iwContent = '<div style="padding:2px;">재고많음</div>'
+				iwPosition = new kakao.maps.LatLng(lat, lng);
+				var infowindow = new kakao.maps.InfoWindow({
+				    position : iwPosition, 
+				    content : iwContent 
+				});								
+				infowindow.open(map, marker); 
+			
+		}
+		
+// 		var iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+// 	    iwPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+		
+// 		var infowindow = new kakao.maps.InfoWindow({
+// 		    position : iwPosition, 
+// 		    content : iwContent 
+// 		});
+		
+// 		infowindow.open(map, marker); 
+		
+		$(function() {
+				$.ajax({
+					url : $("form").attr("action"),
+					success : function(jsonObj) {
+						$(jsonObj.stores).each(function(index, store) {
+							if (store.remain_stat == 'plenty') {								
+								lat = store.lat;
+								lng = store.lng;
+								markerfunction(lat, lng);
+								
+								
+							} else if (store.remain_stat == 'few') {
+								console.log(store.name + "재고적음(10개미만)");
+								lat = store.lat;
+								lng = store.lng;
+								markerfunction(lat, lng);
+								
+// 								var iwContent = '<div style="padding:2px;">재고적음</div>'
+// 									iwPosition = new kakao.maps.LatLng(lat, lng);
+// 									var infowindow = new kakao.maps.InfoWindow({
+// 									    position : iwPosition, 
+// 									    content : iwContent 
+// 									});								
+// 									infowindow.open(map);
+							} else {
+								console.log(store.name + "재고소진 혹은 판매중지");
+								lat = store.lat;
+								lng = store.lng;
+								markerfunction(lat, lng);
+								
+// 								var iwContent = '<div style="padding:2px;">재고소진</div>'
+// 									iwPosition = new kakao.maps.LatLng(lat, lng);
+// 									var infowindow = new kakao.maps.InfoWindow({
+// 									    position : iwPosition, 
+// 									    content : iwContent 
+// 									});								
+// 									infowindow.open(map);
+							}
+						});
+					}
+				});
+				return false;
+			});
+	
+		
+// 		var markerPosition = new kakao.maps.LatLng(lat, lng);
+// 		var marker = new kakao.maps.Marker({
+// 			position : markerPosition
+// 		})
+
+// 		marker.setMap(map);
+	</script>
+	<form
+		action="https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=37.401913&lng=127.107170">
+		<button>공적마스크</button>
+	</form>
+</body>
+</html>
