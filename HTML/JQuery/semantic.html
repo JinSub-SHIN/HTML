@@ -10,7 +10,8 @@
 }
 
 nav>ul>li>a {
-	color: black;
+	font-size : 20px;
+	color: white;
 	text-decoration: none;
 }
 
@@ -29,7 +30,7 @@ ul {
 	display: inline-block;
 	width: 150px;
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: middle;	
 }
 
 div {
@@ -48,6 +49,8 @@ nav {
 	background-color: white;
 	padding: 10px 10px 40px 10px;
 	height: 300px;
+	font-size : 20px;
+	overflow: auto;
 }
 
 .head {
@@ -58,6 +61,7 @@ nav {
 
 li {
 	list-style-type: none;	
+	
 }
 
 .right {
@@ -82,6 +86,7 @@ li {
 	height: 150px;
 	border: 2px solid;
 	overflow: auto;
+	text-align: left;
 }
 
 footer {
@@ -97,50 +102,153 @@ img{
 	height: 70px;
 }
 
+#im:hover{
+	border:1px solid;
+}
+
+span{
+	font-size : 22px;
+	text-align: left;
+}
+
+#deepimg{
+	float:left;
+	width:150px;
+	height:150px;
+	margin : 0px 0px 0px 0px;
+}
+
+#innerbt{
+	float:right;
+	width: auto;
+	height: 30px;
+	font-size: 15px;
+}
+
+input[type=number]{
+	float:right;
+	line-height: 8px;
+	width: 50px;
+	background-color: yellow;
+	font-size: 15px;	
+	
+}
+
+#divnum{
+	float:right;
+}
+
 </style>
 <script src="/html/lib/jquery.min.js"></script>
 <script>
 	$(document).ready(function() {
 		
-		$.ajax({
-			url: "/html/productList.jsp",
-			success:function(jsonObjs){	
-					var tableObj = $('<table>');
-				$(jsonObjs).each(function(index, product){					
-					console.log(index +":" +product.prod_no +":" + product.prod_name);
-					// document.createElement("div")와같음...
-					var innerDiv = '<tr>';
-						innerDiv += '<td><img src="/html/images/' + product.prod_no + '.jpg"></td>';
-						innerDiv += '<td><ul>'						
-					innerDiv += '<li>';
-					innerDiv += "제품번호 : "+product.prod_no;
-					innerDiv += '</li>';
-					innerDiv += '<li>';
-					innerDiv += "제품명 : "+product.prod_name;
-					innerDiv += '</li>';
-					innerDiv += '<li>';
-					innerDiv += "가격 : "+product.prod_price;
-					innerDiv += '</li>';					
-					innerDiv += '</ul>';
-					innerDiv += '</td>';
-					innerDiv += '</tr>';
-					tableObj.append(innerDiv);										
-					$("section>article.left").append(tableObj);
-				});
-			}
+		//이미 존재하는 DOM객체의 이벤트처리방법
+// 		$("td.tdimg").click(function(){
+// 			console.log("클릭");
+// 		});	
+		
+		
+		//전송데이터 : prod_no=상품번호값 ex)prod_no=1001
+		//응답성공되면 json객체타입으로 응답결과얻기
+		//json객체구조 :
+		//status-string:1, -1
+		//product-object:status가 1인경우
+		//				 object내용: prod_no / prod_name / prod_price
+		// msg : status가 -1인 경우
+		//		 내용: 상품찾기못한경우 상세예외메시지
+		
+		$("section>article").on("click", "#im", function(){				
+			$.ajax({
+				url : "http://192.168.0.137:8888/html/productDetail.jsp",
+				data : "prod_no=" + this.src.substr(34,4),
+				success:function(jsonObj){
+					var aObj = $("section>.a");
+					aObj.empty();
+					if(jsonObj.status == 1){
+						var innerDiv = '<span>';
+							innerDiv += '<img id="deepimg" src="/html/images/' +jsonObj.product.prod_no + '.jpg">';
+							innerDiv += "<< 클릭하신 상세정보 >><br>"
+							innerDiv += '상품번호=<span id="jsonpdno">' +jsonObj.product.prod_no+"</span><br>";							
+							innerDiv += '상품명=' +jsonObj.product.prod_name+"<br>";
+							innerDiv += '<div id="divnum">수량<input type="number" value="0" min="0" max="10"></div>';
+							innerDiv += '상품가격=' +jsonObj.product.prod_price+"<br>";
+							innerDiv += '</span>';							
+							innerDiv += '<button id="innerbt">장바구니넣기</button>'
+							aObj.html(innerDiv);
+							$('aObj').append(aObj);
+					} else{
+						console.log("실패");
+					}
+				}
+			})
+			
 		});
-		
-		
+	
+		$("section>article").on("click", "#innerbt", function(){	
+			var pdno = $('#jsonpdno').html();
+			console.log(pdno);
+			var quantity = $('input[type=number]');
+			if(quantity.val()==0){
+				alert("주문할 수량이 없습니다");
+			} else {
+				$.ajax({
+					url : "/html/putCart.jsp",
+					data : "prod_no="+pdno+"&quantity=" + quantity.val(),
+					success : function(){
+						alert("장바구니에 넣었습니다");
+					}
+				})
+				
+			}
+			
+		})
+	
+	
+	
+		//어제 상품목록보기	
+		//상품목록보기용 메뉴클릭이벤트를 강제 발생	
+		$('nav>ul>li>a.abc').trigger("click");
 
 		var loginObjs = $("nav>ul>li>a").click(function() {
 			//section영역의 내용을 모두 지우기.
-			var sectionObj = $("section");
+			var sectionObj = $("section>article.left");			
 			sectionObj.empty();
 
 			//현재객체의 href속성값
 			var href = $(this).attr('href');
 			console.log(href);
 			switch (href) {
+			case 'productList.jsp':				
+				//상품목록얻기
+				$.ajax({
+					url: "/html/productList.jsp",
+					success:function(jsonObjs){							
+							var tableObj = $('<table>');
+						$(jsonObjs).each(function(index, product){					
+							console.log(index +":" +product.prod_no +":" + product.prod_name);
+							// document.createElement("div")와같음...
+							var innerDiv = '<tr>';
+								innerDiv += '<td><img id="im" src="/html/images/' + product.prod_no + '.jpg"></td>';
+								innerDiv += '<td><ul>'						
+								innerDiv += '<li>';
+								innerDiv += "제품번호 : "+product.prod_no;
+								innerDiv += '</li>';
+								innerDiv += '<li>';
+								innerDiv += "제품명 : "+product.prod_name;
+								innerDiv += '</li>';
+								innerDiv += '<li>';
+								innerDiv += "가격 : "+product.prod_price;
+								innerDiv += '</li>';					
+								innerDiv += '</ul>';
+								innerDiv += '</td>';
+								innerDiv += '</tr>';
+								tableObj.append(innerDiv);								
+								$("section>article.left").append(tableObj);								
+						});
+					}
+				});			
+				break;
 			case '/html/jq/login.html':
 				// 				$('section').html("로그인페이지");
 				$.ajax({
@@ -159,9 +267,53 @@ img{
 					}
 				})
 				break;
+			case 'viewCart.jsp':				
+				$.ajax({
+					url : '/html/viewCart.jsp',
+					success : function(jsonObj){						
+						if(jsonObj.status == 1 ){	
+							
+							var em = $('section>article.a');
+							em.empty();
+							var ale = $('section>article.left');
+							var innerDiv = "";
+							
+							for(var i=0 ; i<jsonObj.products.length ; i++){
+							var pno = jsonObj.products[i].product.prod_no;
+							var name = jsonObj.products[i].product.prod_name;
+							var ppri = jsonObj.products[i].product.prod_price;
+							var qu = jsonObj.products[i].quantity;
+							
+							console.log(name + " : " + qu );
+							
+							innerDiv += '<span>';
+							innerDiv += '상품번호 : ' + pno + '<br>';
+							innerDiv += '상품명 : ' + name + '<br>';	
+							innerDiv += '개당가격 : ' + ppri + '<br>';
+							innerDiv += '수량 : ' + qu + '<br>';
+							innerDiv += '총액 : ' + ppri*qu + '<br>';
+							innerDiv += '------------------------------<br>'
+							innerDiv += '</span>';
+																				
+							}
+							
+							ale.html(innerDiv);
+							$('ale').append(ale);
+							
+						} else {
+							console.log("장바구니가없습니다");
+						}
+					},
+					error:function(xhr, status){
+						console.log(status);
+					}
+			});
+				break;
 			}
 			return false; //기본이벤트처리막기 + 이벤트전파막기
-		});		
+		});			
+		
+		
 		
 	})
 </script>
@@ -179,13 +331,14 @@ img{
 		<ul>
 			<li class="menu"><a href="/html/jq/login.html" target="_blank">로그인</a></li>
 			<li class="menu"><a href="/html/jq/signup.html" target="_blank">가입</a></li>
+			<li class="menu"><a class="abc" href="productList.jsp">상품목록</a></li>
+			<li class="menu"><a href="viewCart.jsp">장바구니보기</a></li>
 		</ul>
 	</nav>
 	<br>
 	<div class="section">
 		<section>
 			<aside class="right">광고1</aside>
-
 			<article class="left"></article>
 			<br>
 			<aside class="right">연관정보</aside>
