@@ -48,7 +48,7 @@ nav {
 	border: 2px solid;
 	background-color: white;
 	padding: 10px 10px 40px 10px;
-	height: 300px;
+/* 	height: 300px; */
 	font-size : 20px;
 	overflow: auto;
 }
@@ -66,7 +66,7 @@ li {
 
 .right {
 	width: 25%;
-	height: 90px;
+	height: 170px;
 	text-align: center;
 	border: 1px solid;
 	background-color: darkgrey;
@@ -81,9 +81,9 @@ li {
 	overflow: auto;
 }
 
-.a {
+.a,.left {
 	width: 70%;
-	height: 150px;
+	height: 237px;
 	border: 2px solid;
 	overflow: auto;
 	text-align: left;
@@ -136,6 +136,13 @@ input[type=number]{
 
 #divnum{
 	float:right;
+}
+
+#order{
+	float:right;
+	width: auto;
+	height: 30px;
+	font-size: 15px;
 }
 
 </style>
@@ -204,8 +211,6 @@ input[type=number]{
 			
 		})
 	
-	
-	
 		//어제 상품목록보기	
 		//상품목록보기용 메뉴클릭이벤트를 강제 발생	
 		$('nav>ul>li>a.abc').trigger("click");
@@ -250,7 +255,8 @@ input[type=number]{
 				});			
 				break;
 			case '/html/jq/login.html':
-				// 				$('section').html("로그인페이지");
+				// 				$('section').html("로그인페이지");	
+				$('.a').empty();
 				$.ajax({
 					url : href,
 					success : function(responseData) {
@@ -260,6 +266,7 @@ input[type=number]{
 				break;
 			case '/html/jq/signup.html':
 				// 				$('section').html("가입페이지");
+				$('.a').empty();
 				$.ajax({
 					url : href,
 					success : function(responseData) {
@@ -271,47 +278,166 @@ input[type=number]{
 				$.ajax({
 					url : '/html/viewCart.jsp',
 					success : function(jsonObj){						
-						if(jsonObj.status == 1 ){	
+						if(jsonObj.status == 1 ){								
 							
 							var em = $('section>article.a');
-							em.empty();
 							var ale = $('section>article.left');
+													
+							em.empty();						
+							
 							var innerDiv = "";
+							var all = 0;
+							var price = "";	
 							
 							for(var i=0 ; i<jsonObj.products.length ; i++){
-							var pno = jsonObj.products[i].product.prod_no;
-							var name = jsonObj.products[i].product.prod_name;
-							var ppri = jsonObj.products[i].product.prod_price;
-							var qu = jsonObj.products[i].quantity;
+									var pno = jsonObj.products[i].product.prod_no;
+									var name = jsonObj.products[i].product.prod_name;
+									var ppri = jsonObj.products[i].product.prod_price;
+									var qu = jsonObj.products[i].quantity;
+									var numsum = (ppri*qu);							
+									var sum = (ppri*qu+"");
+									var sumlen = (Math.trunc(sum.length/3));						
+																	
+									innerDiv += '<span>';
+									innerDiv += '상품번호 : ' + pno + '<br>';
+									innerDiv += '상품명 : ' + name + '<br>';	
+									innerDiv += '개당가격 : ' + ppri + '<br>';
+									innerDiv += '수량 : ' + qu + '<br>';								
+									innerDiv += '------------------------------<br>'							
+									all = all + numsum;
+								
+								}	//for문끝
 							
-							console.log(name + " : " + qu );
+								all = all+"";
+								console.log(all);
+								var front = (all).substr(0,1)+',';
+								var front2 = (all).substr(0,2)+',';	
+														
+								if(all.length%3 == 1){
+									price += front;
+								} else if(all.length%3 == 2){
+									price += front2;
+								}						
+								
+								for(var t=sumlen ; t>=1 ; t--){								
+									if(t==1){
+										var str = all.substr(all.length-t*3, 3);
+										price += str;
+									}else{								
+									var str = all.substr(all.length-t*3, 3);
+									price += str+',';
+									}
+								}
 							
-							innerDiv += '<span>';
-							innerDiv += '상품번호 : ' + pno + '<br>';
-							innerDiv += '상품명 : ' + name + '<br>';	
-							innerDiv += '개당가격 : ' + ppri + '<br>';
-							innerDiv += '수량 : ' + qu + '<br>';
-							innerDiv += '총액 : ' + ppri*qu + '<br>';
-							innerDiv += '------------------------------<br>'
-							innerDiv += '</span>';
-																				
+								innerDiv += '결제예상금액 : ' + price + ' 원';							
+								innerDiv += '</span>';
+								innerDiv += '<button id="order">주문하기</button>'
+								ale.html(innerDiv);
+								$('ale').append(ale);
+							
+							} else {
+							
+								var em = $('section>article.a');
+								em.empty();
+								var ale = $('section>article.left');
+								var innerDiv = "";
+								innerDiv += '<span>'
+								innerDiv += '장바구니가 비었습니다<br>'
+								innerDiv += '결제예상금액 : 0 원</span>'
+								ale.html(innerDiv);
+								$('ale').append(ale);
+								console.log("장바구니가없습니다");
 							}
-							
-							ale.html(innerDiv);
-							$('ale').append(ale);
-							
-						} else {
-							console.log("장바구니가없습니다");
+						},
+							error:function(xhr, status){
+							console.log(status);
 						}
-					},
-					error:function(xhr, status){
-						console.log(status);
-					}
-			});
-				break;
+				});
+				break;	
+			case 'viewOrder.jsp':
+				$.ajax ({
+		               url : '/html/viewOrder.jsp',
+		               success : function(jsonObjArr) {
+		                  $('section>article.a').empty();
+		                  var oNo;
+		                  var oDt;
+		                  var pNo;
+		                  var pName;
+		                  var pPrice;
+		                  var pQuantity;
+		                  var pTotal;
+		               
+		                  if(jsonObjArr.status=='1') {
+		                     var orderObj = $('<div class="orderList">'); //$() <=안에 태그를 넣어서 객체로 만들어야함!!!
+		                     var tr = '<tr>';
+		                     var td = '<td>';
+		                     var th = '<th>';
+		                     
+		                     var innerDiv = '<table class="orderListTable">';
+		                     
+		                     innerDiv +=tr;
+		                     innerDiv += th + '주문번호</th>';
+		                     innerDiv += th + '주문일자</th>';
+		                     innerDiv += th + '주문제품번호</th>';
+		                     innerDiv += th + '제품명</th>';
+		                     innerDiv += th + '제품가격</th>';
+		                     innerDiv += th + '주문수량</th>';
+		                     innerDiv += th + '주문금액</th></tr>';
+		                     
+		                     $(jsonObjArr.infos).each(function(index, e) { 		                        
+		                        var oNo = e.order_no;
+		                        var oDt = e.order_dt;	                        	                        
+		                        
+		                        innerDiv += tr + td + oNo +'</td>';
+		                        innerDiv += td + oDt +'</td>';
+		                        
+		                        $(e.lines).each(function(index, r) {
+		                           
+		                           var pNo= r.product.prod_no;
+		                           var pName= r.product.prod_name;
+		                           var pPrice= r.product.prod_price;
+		                           var pQuantity = r.order_quantity;
+		                           var pTotal = pPrice * pQuantity;
+		                           
+		                           innerDiv += td + pNo +'</td>';
+		                           innerDiv += td + pName +'</td>';
+		                           innerDiv += td + pPrice +'</td>';
+		                           innerDiv += td + pQuantity +'</td>';
+		                           innerDiv += td + pTotal + '</td></tr>'; 
+		                           //console.log(oNo + oDt + pNo + pName+pPrice+ " : "+pQuantity+" : "+pTotal);
+		                        }); 
+		                     }); //each end
+		                     
+		                     innerDiv += '</table></div>';
+		                     orderObj.html(innerDiv);
+		                     $('section>article.a').append(orderObj);
+		                     
+		                  } else {
+		                     alert(jsonObjArr.msg);
+		                     $('nav>ul>li>a.loginmenu').trigger('click');
+		                  }
+		               
+		               }//success end
+		               
+		            });//ajax end
+		            break;			
 			}
 			return false; //기본이벤트처리막기 + 이벤트전파막기
 		});			
+				
+		$("section>article").on("click", "#order", function(){
+			
+			$.ajax({
+				url : "/html/addOrder.jsp",
+				success : function(jsonObj){
+					if(jsonObj.status == -1){
+						alert(jsonObj.msg);
+					} else{
+						alert("주문하였음");
+					}
+				}
+			});
+		});
 		
 		
 		
@@ -333,6 +459,7 @@ input[type=number]{
 			<li class="menu"><a href="/html/jq/signup.html" target="_blank">가입</a></li>
 			<li class="menu"><a class="abc" href="productList.jsp">상품목록</a></li>
 			<li class="menu"><a href="viewCart.jsp">장바구니보기</a></li>
+			<li class="menu"><a href="viewOrder.jsp">주문내역보기</a></li>
 		</ul>
 	</nav>
 	<br>
