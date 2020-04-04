@@ -150,6 +150,9 @@ input[type=number]{
 <script>
 	$(document).ready(function() {
 		
+		$('#vorder').hide();		
+		$('#logout').hide();
+		
 		//이미 존재하는 DOM객체의 이벤트처리방법
 // 		$("td.tdimg").click(function(){
 // 			console.log("클릭");
@@ -167,7 +170,7 @@ input[type=number]{
 		
 		$("section>article").on("click", "#im", function(){				
 			$.ajax({
-				url : "http://192.168.0.137:8888/html/productDetail.jsp",
+				url : "/html/productDetail.jsp",
 				data : "prod_no=" + this.src.substr(34,4),
 				success:function(jsonObj){
 					var aObj = $("section>.a");
@@ -215,7 +218,7 @@ input[type=number]{
 		//상품목록보기용 메뉴클릭이벤트를 강제 발생	
 		$('nav>ul>li>a.abc').trigger("click");
 
-		var loginObjs = $("nav>ul>li>a").click(function() {
+		var loginObjs = $("nav>ul>li>a#ajx").click(function() {
 			//section영역의 내용을 모두 지우기.
 			var sectionObj = $("section>article.left");			
 			sectionObj.empty();
@@ -260,7 +263,7 @@ input[type=number]{
 				$.ajax({
 					url : href,
 					success : function(responseData) {
-						sectionObj.html(responseData);
+						sectionObj.html(responseData);						
 					}
 				})
 				break;
@@ -420,7 +423,22 @@ input[type=number]{
 		               }//success end
 		               
 		            });//ajax end
-		            break;			
+		            break;	
+			case 'logout.jsp' :
+				$.ajax ({
+		               url : '/html/logout.jsp',
+		               success : function(jsonObj) {		            	   
+		            	   if(jsonObj.status == 1){
+		            		  		alert(jsonObj.msg);
+		            		   		$('#logout').hide();
+		            		   		$('#vorder').hide();
+		            		   		$('#lgin').show();	
+		            		   		$('#signup').show();
+		            		   	}
+		            	  	 }
+		            	   
+		              	 });			
+				break;
 			}
 			return false; //기본이벤트처리막기 + 이벤트전파막기
 		});			
@@ -433,7 +451,8 @@ input[type=number]{
 					if(jsonObj.status == -1){
 						alert(jsonObj.msg);
 					} else{
-						alert("주문하였음");
+						alert(jsonObj.msg);
+						$('.janbaguni').trigger("click");
 					}
 				}
 			});
@@ -449,17 +468,19 @@ input[type=number]{
 	<!-- 해더 = 머리글 -->
 	<header>
 		<div class="head">
-			<h1 id="id1">SEMANTIC.HTML</h1>
+			<h1 id="id1">대 박  대 박  대 박  대 박  대 박  대 박  대 박</h1>
 		</div>
 		<br>
 	</header>
 	<nav>
 		<ul>
-			<li class="menu"><a href="/html/jq/login.html" target="_blank">로그인</a></li>
-			<li class="menu"><a href="/html/jq/signup.html" target="_blank">가입</a></li>
-			<li class="menu"><a class="abc" href="productList.jsp">상품목록</a></li>
-			<li class="menu"><a href="viewCart.jsp">장바구니보기</a></li>
-			<li class="menu"><a href="viewOrder.jsp">주문내역보기</a></li>
+			<li class="menu" id="lgin" ><a id="ajx" href="/html/jq/login.html" target="_blank">로그인</a></li>
+			<li class="menu" id="logout"><a id="ajx" href="logout.jsp" >로그아웃</a></li>
+			<li class="menu" id="signup"><a id="ajx" class="ajx" href="/html/jq/signup.html" target="_blank">가입</a></li>
+			<li class="menu"><a id="ajx" class="abc" href="productList.jsp">상품목록</a></li>
+			<li class="menu"><a id="ajx" class="janbaguni" href="viewCart.jsp">장바구니보기</a></li>
+			<li class="menu" id="vorder"><a id="ajx" href="viewOrder.jsp">주문내역보기</a></li>
+			<li class="menu"><a href="/html/jq/mask.html" target="_blank">공적마스크</a>
 		</ul>
 	</nav>
 	<br>
